@@ -1,0 +1,146 @@
+{
+ "same set": {
+  "instrument": "same set",
+  "result": "passed",
+  "scope": "the customers in the set of changes fp:3884091194fc, against the approved list",
+  "taken_at": "2026-11-11T15:05:33",
+  "compared": [
+   {
+    "approved list": "fp:1eac1795facd",
+    "customers in the changes": "fp:1eac1795facd"
+   }
+  ],
+  "state_it_ran_on": "fp:3884091194fc",
+  "returns": {
+   "size_of_the_approved_list": 100,
+   "size_of_the_set_in_the_changes": 100,
+   "missing": 0,
+   "extra": 0
+  }
+ },
+ "summary of the change": {
+  "instrument": "summary of the change",
+  "result": "passed",
+  "scope": "the set of changes fp:3884091194fc, against the planned change",
+  "taken_at": "2026-11-11T15:05:36",
+  "compared": [
+   {
+    "shape of the planned change": "fp:e9895f84530a",
+    "shape of the change found": "fp:e9895f84530a"
+   }
+  ],
+  "state_it_ran_on": "fp:3884091194fc",
+  "returns": {
+   "tables": [
+    {
+     "table": "case table",
+     "rows_added": 100,
+     "rows_updated": 0,
+     "rows_deleted": 0,
+     "columns_touched": [
+      "all columns of the added rows"
+     ]
+    },
+    {
+     "table": "account table",
+     "rows_added": 0,
+     "rows_updated": 100,
+     "rows_deleted": 0,
+     "columns_touched": [
+      "status column"
+     ],
+     "rows_holding_the_value_the_plan_fixes": 100
+    }
+   ],
+   "value_the_plan_fixes": "fp:5f98e7b59bbf",
+   "anything_outside_the_plan": "nothing"
+  }
+ },
+ "undo rehearsal": {
+  "instrument": "undo rehearsal",
+  "result": "passed",
+  "scope": "a copy of the live tables that the set of changes fp:3884091194fc touches (case table, account table)",
+  "taken_at": "2026-11-11T15:05:39",
+  "compared": [
+   {
+    "state before the promotion": "fp:05d71f667d0f",
+    "state after the undo": "fp:05d71f667d0f"
+   }
+  ],
+  "state_it_ran_on": "fp:dc5aeca2c914",
+  "returns": {
+   "state_found_is_the_state_the_promotion_left": true,
+   "state_after_the_undo_equals_state_before": true
+  }
+ },
+ "release check": {
+  "instrument": "release check",
+  "result": "passed",
+  "scope": "the recipients and the wording presented for the release",
+  "taken_at": "2026-11-11T15:05:42",
+  "compared": [
+   {
+    "recipients presented": "fp:1eac1795facd",
+    "customers promoted": "fp:1eac1795facd"
+   },
+   {
+    "wording presented": "fp:7d300a04306f",
+    "wording approved": "fp:7d300a04306f"
+   }
+  ],
+  "state_it_ran_on": "fp:3884091194fc",
+  "returns": {
+   "recipients_identical_to_those_promoted": true,
+   "wording_identical_to_the_approved_wording": true,
+   "number_to_send": 100
+  }
+ },
+ "sent as released": {
+  "instrument": "sent as released",
+  "result": "passed",
+  "scope": "the 100 confirmed sending calls in the record under release fp:ca93dbf2ef59",
+  "taken_at": "2026-11-11T15:05:45",
+  "compared": [
+   {
+    "recipients of the confirmed calls": "fp:1eac1795facd",
+    "recipients released": "fp:1eac1795facd"
+   },
+   {
+    "wording in the confirmed calls": "fp:7d300a04306f",
+    "wording released": "fp:7d300a04306f"
+   }
+  ],
+  "state_it_ran_on": "fp:2279bca70cfd",
+  "returns": {
+   "sending_calls_confirmed": 100,
+   "sending_calls_ordered_and_not_confirmed": 0,
+   "confirmed_recipients_within_the_released_set": "100 of 100",
+   "confirmed_calls_with_the_released_wording": "100 of 100",
+   "size_of_the_released_set": 100
+  }
+ },
+ "trace of an action": {
+  "instrument": "trace of an action",
+  "result": "passed",
+  "scope": "the outbox, as of the time this answer was taken, for release fp:ca93dbf2ef59",
+  "taken_at": "2026-11-11T15:05:48",
+  "compared": [
+   {
+    "wording in the rows found": "fp:7d300a04306f",
+    "wording released": "fp:7d300a04306f"
+   }
+  ],
+  "state_it_ran_on": "fp:2c66b0cdd975",
+  "returns": {
+   "rows_in_the_outbox_under_the_release": 100,
+   "recipients_of_the_release_those_rows_cover": 100,
+   "rows_for_a_recipient_of_the_release": "100 of 100",
+   "rows_in_the_released_wording": "100 of 100",
+   "size_of_the_released_set": 100,
+   "calls_under_the_release_ordered_and_not_confirmed": "none in the record",
+   "the_outbox_holds_a_row_for_every_notice_sent": "yes: sending a notice is appending the row in the same step, and rows are never removed",
+   "a_call_ordered_before_this_answer_was_taken_can_still_write": "no: the task is ended and no call is in progress. Every sending call in the record up to line 119, a call that is ordered and not confirmed included, has ended and can no longer write",
+   "what_this_answer_does_not_say": "whether a notice reached its customer"
+  }
+ }
+}
