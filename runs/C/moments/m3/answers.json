@@ -1,0 +1,121 @@
+[
+ {
+  "instrument": "same set",
+  "result": "passed",
+  "scope": "the customers in the set of changes fp:d2062892a813, against the approved list",
+  "taken_at": "2026-11-11T09:00:21",
+  "compared": [
+   {
+    "approved list": "fp:ede862f2771d",
+    "customers in the changes": "fp:ede862f2771d"
+   }
+  ],
+  "state_it_ran_on": "fp:d2062892a813",
+  "returns": {
+   "size_of_the_approved_list": 100,
+   "size_of_the_set_in_the_changes": 100,
+   "missing": 0,
+   "extra": 0
+  }
+ },
+ {
+  "instrument": "summary of the change",
+  "result": "passed",
+  "scope": "the set of changes fp:d2062892a813, against the planned change",
+  "taken_at": "2026-11-11T09:00:25",
+  "compared": [
+   {
+    "shape of the planned change": "fp:27376035ee50",
+    "shape of the change found": "fp:27376035ee50"
+   }
+  ],
+  "state_it_ran_on": "fp:d2062892a813",
+  "returns": {
+   "tables": [
+    {
+     "table": "case table",
+     "rows_added": 100,
+     "rows_updated": 0,
+     "rows_deleted": 0,
+     "columns_touched": [
+      "all columns of the added rows"
+     ]
+    },
+    {
+     "table": "account table",
+     "rows_added": 0,
+     "rows_updated": 100,
+     "rows_deleted": 0,
+     "columns_touched": [
+      "status column"
+     ],
+     "rows_holding_the_value_the_plan_fixes": 100
+    }
+   ],
+   "value_the_plan_fixes": "fp:d2541cf3223d",
+   "anything_outside_the_plan": "nothing"
+  }
+ },
+ {
+  "instrument": "undo rehearsal",
+  "result": "passed",
+  "scope": "a copy of the live tables that the set of changes fp:d2062892a813 touches (case table, account table)",
+  "taken_at": "2026-11-11T09:00:27",
+  "compared": [
+   {
+    "state before the change": "fp:a1c4fe02df56",
+    "state after the undo": "fp:a1c4fe02df56"
+   }
+  ],
+  "state_it_ran_on": "fp:a1c4fe02df56",
+  "returns": {
+   "state_after_the_undo_equals_state_before": true
+  }
+ },
+ {
+  "instrument": "release check",
+  "result": "passed",
+  "scope": "the recipients and the wording presented for the release",
+  "taken_at": "2026-11-11T09:00:38",
+  "compared": [
+   {
+    "recipients presented": "fp:ede862f2771d",
+    "customers promoted": "fp:ede862f2771d"
+   },
+   {
+    "wording presented": "fp:693857ce1b83",
+    "wording approved": "fp:693857ce1b83"
+   }
+  ],
+  "state_it_ran_on": "fp:d2062892a813",
+  "returns": {
+   "recipients_identical_to_those_promoted": true,
+   "wording_identical_to_the_approved_wording": true,
+   "number_to_send": 100
+  }
+ },
+ {
+  "instrument": "sent as released",
+  "result": "passed",
+  "scope": "the 40 confirmed sending calls in the record under release fp:d194fb095a7e",
+  "taken_at": "2026-11-11T09:02:29",
+  "compared": [
+   {
+    "recipients of the confirmed calls": "fp:3cfb8f4b569b",
+    "recipients released": "fp:ede862f2771d"
+   },
+   {
+    "wording in the confirmed calls": "fp:693857ce1b83",
+    "wording released": "fp:693857ce1b83"
+   }
+  ],
+  "state_it_ran_on": "fp:24f505deaaee",
+  "returns": {
+   "sending_calls_confirmed": 40,
+   "sending_calls_ordered_and_not_confirmed": 0,
+   "confirmed_recipients_within_the_released_set": "40 of 40",
+   "confirmed_calls_with_the_released_wording": "40 of 40",
+   "size_of_the_released_set": 100
+  }
+ }
+]
