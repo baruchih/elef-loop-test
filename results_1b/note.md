@@ -1,6 +1,22 @@
 # Loop experiment 1b: results note
 
 **Date:** 11 November 2026 · **Reviewer models:** `claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5` (each session reported the same identifier back) · **Runs:** A, B, C of experiment 1 as kept, and D made from B · **Arm:** blind only · **Sessions:** 105 (15 as it was and 20 with the fixes, for each model), plus 6 pilot sessions kept apart. No worker was run.
+**Erratum, 16 November 2026: the cost figures.** The runtime's cost figure for a resumed session is a running total over its turns, and the harness added it up turn by turn, so every cost in this note counts a session's cost several times over. Corrected, a turn costs the difference from the turn before. The figure is the runtime's price of the tokens at list prices. Tokens, wall time and every other measure were right. Nothing else in this note is changed, and the cost figures below this line stand as first written. All four experiments are set out in `cost_corrected.md`, made by `python -m loop.cost`.
+
+
+| Model | Condition | Sessions | Cost in all, as this note gives it | Corrected | A session, as this note gives it | A session, corrected |
+|---|---|---|---|---|---|---|
+| Opus | as it was | 15 | $18.18 | $5.77 | $1.21 | $0.39 |
+| Opus | with the fixes | 20 | $34.36 | $8.29 | $1.72 | $0.41 |
+| Sonnet | as it was | 15 | $6.91 | $2.27 | $0.46 | $0.15 |
+| Sonnet | with the fixes | 20 | $14.88 | $3.63 | $0.74 | $0.18 |
+| Haiku | as it was | 15 | $0.64 | $0.22 | $0.04 | $0.014 |
+| Haiku | with the fixes | 20 | $1.45 | $0.35 | $0.07 | $0.018 |
+| All | | 105 | $76.43 | $20.53 | | |
+| The six pilot sessions | | 6 | $6.04 | $1.36 | | |
+
+By model, a session over both conditions, corrected: Opus $0.40, Sonnet $0.17, Haiku $0.016.
+
 
 ## Answers
 

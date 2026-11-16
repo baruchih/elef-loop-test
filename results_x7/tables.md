@@ -224,26 +224,26 @@ Rows are left out where every entry is right and the key takes one entry only, e
 
 ## 6. Cost
 
-Cost is the figure the runtime reports for a session.
+Cost is the runtime's figure for a session, at list prices. **Corrected on 16 November 2026.** The runtime's figure is a running total over the turns of a resumed session, and the harness had added it up turn by turn, so the table as first written counted a session's cost several times over. Here a turn costs the difference from the turn before. The figures as first written are kept in the last two columns. Tokens, wall time and the other columns were right.
 
-| model | run | sessions | cost | a session | wall, mean | the plan | wake A1 | wake A2 | the verdict | allowance spent, mean | questions to the record, mean | output tokens | cache read | cache write | replies asked for again |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| opus | 0 | 10 | $15.79 | $1.579 | 84 s | $0.047 | $0.277 | $0.411 | $0.844 | 50.0 | 9.5 | 73614 | 2245476 | 320903 | 0 |
-| opus | U | 10 | $8.14 | $0.814 | 62 s | $0.048 | $0.314 | $0.452 | — | 0.0 | 6.2 | 54546 | 1236124 | 136530 | 0 |
-| opus | R1 | 10 | $3.27 | $0.327 | 42 s | $0.056 | $0.270 | — | — | 30.0 | 3.7 | 38582 | 565091 | 72284 | 2 |
-| opus | R2 | 10 | $16.69 | $1.669 | 89 s | $0.048 | $0.308 | $0.431 | $0.882 | 36.0 | 10.1 | 78115 | 2378056 | 332477 | 1 |
-| opus | all | 40 | $43.88 | $1.097 | 70 s | $0.050 | $0.292 | $0.431 | $0.863 | 29.0 | 7.4 | 244857 | 6424747 | 862194 | 3 |
-| sonnet | 0 | 10 | $6.39 | $0.639 | 68 s | $0.018 | $0.136 | $0.198 | $0.286 | 40.0 | 6.4 | 61469 | 2005142 | 185066 | 0 |
-| sonnet | U | 10 | $3.62 | $0.362 | 47 s | $0.019 | $0.146 | $0.197 | — | 0.0 | 3.2 | 41770 | 1097788 | 139058 | 0 |
-| sonnet | R1 | 10 | $1.54 | $0.154 | 31 s | $0.019 | $0.135 | — | — | 30.0 | 2.2 | 30046 | 532581 | 99299 | 0 |
-| sonnet | R2 | 10 | $6.60 | $0.660 | 61 s | $0.019 | $0.135 | $0.199 | $0.307 | 41.0 | 5.9 | 60128 | 2039827 | 212617 | 0 |
-| sonnet | all | 40 | $18.15 | $0.454 | 52 s | $0.019 | $0.138 | $0.198 | $0.296 | 27.8 | 4.4 | 193413 | 5675338 | 636040 | 0 |
-| haiku | 0 | 10 | $0.69 | $0.069 | 93 s | $0.003 | $0.015 | $0.021 | $0.029 | 17.0 | 4.5 | 157999 | 2460057 | 260191 | 0 |
-| haiku | U | 10 | $0.42 | $0.042 | 73 s | $0.003 | $0.017 | $0.022 | — | 18.0 | 3.6 | 128348 | 1395229 | 209892 | 0 |
-| haiku | R1 | 10 | $0.57 | $0.057 | 83 s | $0.004 | $0.015 | $0.021 | $0.027 | 32.0 | 3.9 | 144145 | 1791606 | 221800 | 1 |
-| haiku | R2 | 10 | $0.62 | $0.062 | 93 s | $0.003 | $0.013 | $0.019 | $0.027 | 27.4 | 5.1 | 151768 | 2120387 | 230435 | 0 |
-| haiku | all | 40 | $2.30 | $0.058 | 85 s | $0.003 | $0.015 | $0.021 | $0.028 | 23.6 | 4.3 | 582260 | 7767279 | 922318 | 1 |
-| all | all | 120 | $64.33 |  |  |  |  |  |  |  |  |  |  |  |  | 4 |
+| model | run | sessions | cost | a session | wall, mean | the plan | wake A1 | wake A2 | the verdict | allowance spent, mean | questions to the record, mean | output tokens | cache read | cache write | replies asked for again | cost as first written | a session, as first written |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| opus | 0 | 10 | $4.49 | $0.449 | 84 s | $0.047 | $0.107 | $0.067 | $0.228 | 50.0 | 9.5 | 73614 | 2245476 | 320903 | 0 | $15.79 | $1.579 |
+| opus | U | 10 | $2.43 | $0.243 | 62 s | $0.048 | $0.124 | $0.071 | — | 0.0 | 6.2 | 54546 | 1236124 | 136530 | 0 | $8.14 | $0.814 |
+| opus | R1 | 10 | $1.46 | $0.146 | 42 s | $0.051 | $0.095 | — | — | 30.0 | 3.7 | 38582 | 565091 | 72284 | 2 | $3.27 | $0.327 |
+| opus | R2 | 10 | $4.70 | $0.470 | 89 s | $0.048 | $0.115 | $0.069 | $0.238 | 36.0 | 10.1 | 78115 | 2378056 | 332477 | 1 | $16.69 | $1.669 |
+| opus | all | 40 | $13.08 | $0.327 | 70 s | $0.048 | $0.110 | $0.069 | $0.233 | 29.0 | 7.4 | 244857 | 6424747 | 862194 | 3 | $43.88 | $1.097 |
+| sonnet | 0 | 10 | $1.56 | $0.156 | 68 s | $0.019 | $0.056 | $0.033 | $0.049 | 40.0 | 6.4 | 61469 | 2005142 | 185066 | 0 | $6.39 | $0.639 |
+| sonnet | U | 10 | $1.08 | $0.108 | 47 s | $0.019 | $0.060 | $0.029 | — | 0.0 | 3.2 | 41770 | 1097788 | 139058 | 0 | $3.62 | $0.362 |
+| sonnet | R1 | 10 | $0.75 | $0.075 | 31 s | $0.019 | $0.056 | — | — | 30.0 | 2.2 | 30046 | 532581 | 99299 | 0 | $1.54 | $0.154 |
+| sonnet | R2 | 10 | $1.66 | $0.166 | 61 s | $0.019 | $0.055 | $0.033 | $0.059 | 41.0 | 5.9 | 60128 | 2039827 | 212617 | 0 | $6.60 | $0.660 |
+| sonnet | all | 40 | $5.05 | $0.126 | 52 s | $0.019 | $0.057 | $0.032 | $0.054 | 27.8 | 4.4 | 193413 | 5675338 | 636040 | 0 | $18.15 | $0.454 |
+| haiku | 0 | 10 | $0.16 | $0.016 | 93 s | $0.003 | $0.005 | $0.003 | $0.004 | 17.0 | 4.5 | 157999 | 2460057 | 260191 | 0 | $0.69 | $0.069 |
+| haiku | U | 10 | $0.12 | $0.012 | 73 s | $0.003 | $0.006 | $0.003 | — | 18.0 | 3.6 | 128348 | 1395229 | 209892 | 0 | $0.42 | $0.042 |
+| haiku | R1 | 10 | $0.13 | $0.013 | 83 s | $0.003 | $0.005 | $0.003 | $0.003 | 32.0 | 3.9 | 144145 | 1791606 | 221800 | 1 | $0.57 | $0.057 |
+| haiku | R2 | 10 | $0.14 | $0.014 | 93 s | $0.003 | $0.004 | $0.003 | $0.004 | 27.4 | 5.1 | 151768 | 2120387 | 230435 | 0 | $0.62 | $0.062 |
+| haiku | all | 40 | $0.55 | $0.014 | 85 s | $0.003 | $0.005 | $0.003 | $0.004 | 23.6 | 4.3 | 582260 | 7767279 | 922318 | 1 | $2.30 | $0.058 |
+| all | all | 120 | $18.69 |  |  |  |  |  |  |  |  |  |  |  |  | 4 | $64.33 |  |
 
 ## 7. How much of the record a session read
 
@@ -263,3 +263,28 @@ From the logs of the questions to the record, by `python -m loop.reading_x7`; no
 | opus | R2 | 10 | 10.1 | 10 | 10 | 0 | 10 | 100.0 (100–100) | 10 | 0 |
 | sonnet | R2 | 10 | 5.9 | 10 | 8 | 3 | 10 | 21.7 (0–100) | 2 | 4 |
 | haiku | R2 | 10 | 5.1 | 1 | 1 | 0 | 10 | 3.3 (0–13) | 0 | 5 |
+
+## 8. Cost by reading
+
+This table is the implementer's reading of the order for it: no specification of the table was at hand. Experiment X8 measures the same thing against a control, in its measure 8. 
+
+The sessions on the two runs whose cut shows only in the record, set apart by whether the session had the lines in front of it (table 7), with what a session of each kind cost, on the corrected figure. A session that proves a cut ends there: on R1 a find ends at A1 and costs less than a miss that goes on, and on R2 the cut is at A3 and both go to the end.
+
+| run | model | the reading | sessions | found and proved | questions to the record, mean | a session | a session, as first written |
+|---|---|---|---|---|---|---|---|
+| R1 | opus | all the account reads covered | 10 | 10 | 3.7 | $0.146 | $0.327 |
+| R1 | sonnet | all the account reads covered | 10 | 10 | 2.2 | $0.075 | $0.154 |
+| R1 | haiku | all the account reads covered | 2 | 2 | 3.5 | $0.010 | $0.021 |
+| R1 | haiku | not | 8 | 0 | 4.0 | $0.014 | $0.066 |
+| R2 | opus | all 100 sending lines returned with their times | 10 | 10 | 10.1 | $0.470 | $1.669 |
+| R2 | sonnet | all 100 sending lines returned with their times | 2 | 2 | 7.0 | $0.229 | $0.821 |
+| R2 | sonnet | not | 8 | 0 | 5.6 | $0.150 | $0.619 |
+| R2 | haiku | not | 10 | 0 | 5.1 | $0.014 | $0.062 |
+
+On clean work (run 0), where every session goes to the end:
+
+| model | sessions | sending lines returned with their times, mean of 100 | questions to the record, mean | a session |
+|---|---|---|---|---|
+| opus | 10 | 90.4 | 9.5 | $0.449 |
+| sonnet | 10 | 1.8 | 6.4 | $0.156 |
+| haiku | 10 | 3.4 | 4.5 | $0.016 |

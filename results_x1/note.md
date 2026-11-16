@@ -1,6 +1,21 @@
 # Loop experiment X1: what does a reviewer's plan catch? Results note
 
 **Date:** 13 November 2026 · **Rests on:** the brief, draft 4, with the clock line agreed after the second pilot, frozen as it was run · **Run:** 90 reviewer sessions on Opus, Sonnet and Haiku (`claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5`), 60 priced and 30 free · **Tables:** `results_x1/tables.md` · **Scores:** `results_x1/scores.json`
+**Erratum, 16 November 2026: the cost figures.** The runtime's cost figure for a resumed session is a running total over its turns, and the harness added it up turn by turn, so every cost in this note counts a session's cost several times over. Corrected, a turn costs the difference from the turn before. The figure is the runtime's price of the tokens at list prices. Tokens, wall time and every other measure were right. Nothing else in this note is changed, and the cost figures below this line stand as first written. All four experiments are set out in `cost_corrected.md`, made by `python -m loop.cost`.
+
+
+| Model | Condition | Sessions | Cost in all, as this note gives it | Corrected | A session, as this note gives it | A session, corrected |
+|---|---|---|---|---|---|---|
+| Opus | priced | 20 | $9.33 | $2.81 | $0.467 | $0.140 |
+| Opus | free | 10 | $8.49 | $2.27 | $0.849 | $0.227 |
+| Sonnet | priced | 20 | $2.88 | $0.88 | $0.144 | $0.044 |
+| Sonnet | free | 10 | $2.81 | $0.78 | $0.281 | $0.078 |
+| Haiku | priced | 20 | $0.29 | $0.08 | $0.015 | $0.004 |
+| Haiku | free | 10 | $0.29 | $0.07 | $0.029 | $0.007 |
+| All | | 90 | $24.10 | $6.89 | | |
+
+By model, a session over both conditions, corrected: Opus $0.169, Sonnet $0.056, Haiku $0.005. By act, for Opus, priced, corrected: the plan $0.03, the wake A1 $0.06, A2 $0.04, the verdict $0.08. The four pilots of six sessions, corrected: $0.61, $0.60, $0.67 and $0.64. Running the 60 priced sessions again would have cost about $4, where this note says about $23.
+
 
 ## In short
 

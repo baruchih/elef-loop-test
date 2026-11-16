@@ -3,7 +3,7 @@ import json
 from collections import Counter
 
 from .fixes import MODELS
-from . import reading_x7
+from . import cost, reading_x7
 from .report_x1 import table, cnt
 from .views_x7 import CLAUSES
 from .x1 import APPROVALS
@@ -146,23 +146,36 @@ def main():
                    "proved and not ruled on", "closing summary: four numbers right", "may still be sent = 0"], rows), ""]
 
     # ---------- 6. cost ----------
-    out += ["## 6. Cost", "", "Cost is the figure the runtime reports for a session.", ""]
+    # Corrected on 16 November 2026: the runtime's figure runs on over the turns of a resumed session, and the harness
+    # had added it up turn by turn. A turn costs the difference from the turn before (loop.cost).
+    K = {}
+    for s in M:
+        c, old, acts = cost.of_session(RESULTS_X7 / "sessions" / s["who"] / s["run"] / str(s["n"]))
+        K[id(s)] = {"cost": c, "old": old, "acts": acts}
+    k = lambda s: K[id(s)]      # noqa: E731
+    out += ["## 6. Cost", "",
+            "Cost is the runtime's figure for a session, at list prices. **Corrected on 16 November 2026.** The runtime's figure "
+            "is a running total over the turns of a resumed session, and the harness had added it up turn by turn, so the table "
+            "as first written counted a session's cost several times over. Here a turn costs the difference from the turn before. "
+            "The figures as first written are kept in the last two columns. Tokens, wall time and the other columns were right.", ""]
     rows = []
     for w in whos:
         for run in list(CUTS) + [None]:
             ss = sel(w, run)
             n = len(ss)
-            acts = [(f"${sum(s['by_act'].get(a, {}).get('cost_usd', 0) for s in ss) / sum(1 for s in ss if a in s['by_act']):.3f}"
-                     if any(a in s["by_act"] for s in ss) else "—") for a in ["plan"] + APPROVALS]
-            rows.append([w, run or "all", n, f"${sum(s['cost_usd'] for s in ss):.2f}", f"${sum(s['cost_usd'] for s in ss) / n:.3f}",
+            acts = [(f"${sum(k(s)['acts'].get(a, 0) for s in ss) / sum(1 for s in ss if a in k(s)['acts']):.3f}"
+                     if any(a in k(s)["acts"] for s in ss) else "—") for a in ["plan"] + APPROVALS]
+            rows.append([w, run or "all", n, f"${sum(k(s)['cost'] for s in ss):.2f}", f"${sum(k(s)['cost'] for s in ss) / n:.3f}",
                          f"{sum(s['wall_s'] for s in ss) / n:.0f} s"] + acts +
                         [f"{sum(s['allowance_spent'] for s in ss) / n:.1f}", f"{sum(s['record_questions'] for s in ss) / n:.1f}",
                          sum(s["tokens"]["output"] for s in ss), sum(s["tokens"]["cache_read"] for s in ss),
-                         sum(s["tokens"]["cache_write"] for s in ss), sum(s["second_tries"] for s in ss)])
-    rows.append(["all", "all", len(M), f"${sum(s['cost_usd'] for s in M):.2f}"] + [""] * 12 + [sum(s["second_tries"] for s in M)])
+                         sum(s["tokens"]["cache_write"] for s in ss), sum(s["second_tries"] for s in ss),
+                         f"${sum(k(s)['old'] for s in ss):.2f}", f"${sum(k(s)['old'] for s in ss) / n:.3f}"])
+    rows.append(["all", "all", len(M), f"${sum(k(s)['cost'] for s in M):.2f}"] + [""] * 12 + [sum(s["second_tries"] for s in M),
+                f"${sum(k(s)['old'] for s in M):.2f}", ""])
     out += [table(["model", "run", "sessions", "cost", "a session", "wall, mean", "the plan", "wake A1", "wake A2", "the verdict",
                    "allowance spent, mean", "questions to the record, mean", "output tokens", "cache read", "cache write",
-                   "replies asked for again"], rows), ""]
+                   "replies asked for again", "cost as first written", "a session, as first written"], rows), ""]
     # ---------- 7. how much of the record was read ----------
     R = reading_x7.main()
     out += ["## 7. How much of the record a session read", "",
@@ -185,6 +198,37 @@ def main():
     out += [table(["model", "run", "sessions", "questions to the record, mean", "covered all the account reads",
                    "by a count by rows", "by all hundred lines shown", "reached A3",
                    "sending lines with their times returned, of 100: mean (range)", "sessions with all 100", "sessions with none"], rows), ""]
+    # ---------- 8. cost by reading ----------
+    def had(r):
+        return r["all_the_account_reads_covered"] if r["run"] == "R1" else (r["reached_A3"] and r["sending_lines_with_their_times_returned"] == 100)
+    byk = {(s["who"], s["run"], s["n"]): s for s in M}
+    out += ["## 8. Cost by reading", "",
+            "This table is the implementer's reading of the order for it: no specification of the table was at hand. Experiment X8 measures the same thing "
+            "against a control, in its measure 8. ", "",
+            "The sessions on the two runs whose cut shows only in the record, set apart by whether the session had the lines in front of it "
+            "(table 7), with what a session of each kind cost, on the corrected figure. A session that proves a cut ends there: on R1 a find "
+            "ends at A1 and costs less than a miss that goes on, and on R2 the cut is at A3 and both go to the end.", ""]
+    rows = []
+    for run, what in [("R1", "all the account reads covered"), ("R2", "all 100 sending lines returned with their times")]:
+        for w in whos:
+            for h in (True, False):
+                rs = [r for r in R if r["who"] == w and r["run"] == run and bool(had(r)) == h]
+                ss = [byk[(r["who"], r["run"], r["n"])] for r in rs]
+                if ss:
+                    rows.append([run, w, what if h else "not", len(ss),
+                                 sum(1 for s in ss if s.get("finding", {}).get("proved")),
+                                 f"{sum(r['questions'] for r in rs) / len(rs):.1f}",
+                                 f"${sum(k(s)['cost'] for s in ss) / len(ss):.3f}", f"${sum(k(s)['old'] for s in ss) / len(ss):.3f}"])
+    out += [table(["run", "model", "the reading", "sessions", "found and proved", "questions to the record, mean",
+                   "a session", "a session, as first written"], rows), ""]
+    rows = []
+    for w in whos:
+        rs = [r for r in R if r["who"] == w and r["run"] == "0"]
+        ss = [byk[(r["who"], r["run"], r["n"])] for r in rs]
+        rows.append([w, len(ss), f"{sum(r['sending_lines_with_their_times_returned'] for r in rs) / len(rs):.1f}",
+                     f"{sum(r['questions'] for r in rs) / len(rs):.1f}", f"${sum(k(s)['cost'] for s in ss) / len(ss):.3f}"])
+    out += ["On clean work (run 0), where every session goes to the end:", "",
+            table(["model", "sessions", "sending lines returned with their times, mean of 100", "questions to the record, mean", "a session"], rows), ""]
     (RESULTS_X7 / "tables.md").write_text("\n".join(out))
     print("\n".join(out))
 

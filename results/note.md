@@ -1,6 +1,16 @@
 # Loop experiment 1: results note
 
 **Date:** 11 November 2026 · **Model:** `claude-fable-5-2` for the worker and for every reviewer session · **Runs:** A, B, C · **Sessions:** 30 (5 for each run and arm), plus 1 pilot kept apart.
+**Erratum, 16 November 2026: the cost figures.** The runtime's cost figure for a resumed session is a running total over its turns, and the harness added it up turn by turn, so every cost in this note counts a session's cost several times over. Corrected, a turn costs the difference from the turn before. The figure is the runtime's price of the tokens at list prices. Tokens, wall time and every other measure were right. Nothing else in this note is changed, and the cost figures below this line stand as first written. All four experiments are set out in `cost_corrected.md`, made by `python -m loop.cost`.
+
+
+| | Sessions | As this note gives it | Corrected | A review, corrected |
+|---|---|---|---|---|
+| Blind | 15 | | $11.71 | $0.78 |
+| Sighted | 15 | | $13.70 | $0.91 |
+| The 30 sessions (`claude-fable-5-2`) | 30 | about $84 | $25.41 | $0.85 |
+| The three worker runs | 3 | about $6 | $3.99 | |
+
 
 ## Answer
 

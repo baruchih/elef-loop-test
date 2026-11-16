@@ -2,6 +2,19 @@
 
 **Date:** 16 November 2026 · **Rests on:** the brief, draft 3, frozen when the counted sessions started · **Run:** 120 reviewer sessions on Opus, Sonnet and Haiku (`claude-opus-5-5`, `claude-sonnet-5-5`, `claude-haiku-5-5`), in ten rounds of twelve, and the three scripts on the four runs · **Tables:** `results_x7/tables.md` · **Scores:** `results_x7/scores.json`
 
+**Corrected on 16 November 2026: the cost figures.** The runtime's cost figure for a resumed session is a running total over its turns, and the harness added it up turn by turn. Every cost in this note as first written was therefore too high, by about three and a half times. The figures below are corrected: a turn costs the difference from the turn before. Nothing else in the note rested on the figure, and nothing else is changed. As first written, and corrected:
+
+| | Sessions | As first written | Corrected | A session, as first written | A session, corrected |
+|---|---|---|---|---|---|
+| Opus | 40 | $43.88 | $13.08 | $1.10 | $0.33 |
+| Sonnet | 40 | $18.15 | $5.05 | $0.45 | $0.13 |
+| Haiku | 40 | $2.30 | $0.55 | $0.06 | $0.014 |
+| All | 120 | $64.33 | $18.69 | | |
+| The first pilot, 6 sessions | 6 | $6.10 | $1.48 | | |
+| The second pilot, 6 sessions | 6 | $2.30 | $0.70 | | |
+
+Opus's cost for a session was given as 2.4 times Sonnet's and 19 times Haiku's; corrected, it is 2.6 times and 24 times. The same error is in the notes of experiments 1, 1b and X1; all four are set out in `cost_corrected.md`.
+
 ## In short
 
 The two cuts that show only in the record tell the models apart. Opus found and proved both in every session. Sonnet found the wide reads in every session and the previews in 2 of 10. Haiku found the wide reads in 2 of 10 and the previews in none. Every find was made by looking at the record, and none by chance. Every miss stopped at the first step: the session did not look at the three lines.
@@ -26,13 +39,13 @@ By the brief's own reading of ten sessions: Opus always, on all three. Sonnet al
 
 | | Opus | Sonnet | Haiku |
 |---|---|---|---|
-| A session, mean of 40 | $1.10 | $0.45 | $0.06 |
+| A session, mean of 40 | $0.33 | $0.13 | $0.014 |
 | The plan | $0.05 | $0.02 | $0.003 |
-| The wake A1 | $0.29 | $0.14 | $0.015 |
-| The wake A2 | $0.43 | $0.20 | $0.021 |
-| The verdict | $0.86 | $0.30 | $0.028 |
-| A session that goes to the end (run 0) | $1.58 | $0.64 | $0.07 |
-| 40 sessions | $43.88 | $18.15 | $2.30 |
+| The wake A1 | $0.11 | $0.06 | $0.005 |
+| The wake A2 | $0.07 | $0.03 | $0.003 |
+| The verdict | $0.23 | $0.05 | $0.004 |
+| A session that goes to the end (run 0) | $0.45 | $0.16 | $0.016 |
+| 40 sessions | $13.08 | $5.05 | $0.55 |
 
 In the posted units, every plan but one costs 180, which is 66 above the fixed policy's 114. The sessions spent 29, 28 and 24 units of the allowance on average.
 
@@ -74,7 +87,7 @@ Sessions that passed each step, of 10. Run U has no step of looking or raising.
 - **Proved and not ruled on:** none. Every proof was followed by a refusal or "revise" that names the answer.
 - **The clause of the breach** was entered as broken in all 64 sessions that proved one.
 
-By the brief's reading: Opus found all three cuts in every session, so they were within its reach, at 2.4 times Sonnet's cost for a session and 19 times Haiku's. And "a rule that reads the clauses plans as well as every model: what is left to the model is what the record shows."
+By the brief's reading: Opus found all three cuts in every session, so they were within its reach, at 2.6 times Sonnet's cost for a session and 24 times Haiku's. And "a rule that reads the clauses plans as well as every model: what is left to the model is what the record shows."
 
 ## 2. The plans
 
@@ -207,12 +220,12 @@ None of it says anything about runs, cuts, scripts or what is measured. No sessi
 
 | | Sessions | Cost | A session | Wall, mean |
 |---|---|---|---|---|
-| Opus | 40 | $43.88 | $1.10 | 70 s |
-| Sonnet | 40 | $18.15 | $0.45 | 52 s |
-| Haiku | 40 | $2.30 | $0.06 | 85 s |
-| All | 120 | $64.33 | | |
+| Opus | 40 | $13.08 | $0.33 | 70 s |
+| Sonnet | 40 | $5.05 | $0.13 | 52 s |
+| Haiku | 40 | $0.55 | $0.014 | 85 s |
+| All | 120 | $18.69 | | |
 
-The figure is the one the runtime reports for a session. On a subscription it is not a sum that was paid: it is the runtime's price of the tokens. The first pilot put the 120 at about $122. The sessions came in at half of that, because 52 of them ended at A1 or A2. The two pilots cost $6.10 and $2.30.
+The figure is the runtime's for a session, corrected as the head of this note says. On a subscription it is not a sum that was paid: it is the runtime's price of the tokens at list prices. The first pilot put the 120 at about $122, on the figures as first summed; on the corrected figures that estimate would have been about $30. The sessions came in below it, because 52 of them ended at A1 or A2. The two pilots cost $1.48 and $0.70.
 
 ## Judged by hand
 
