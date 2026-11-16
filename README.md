@@ -11,12 +11,14 @@ Each experiment has a brief, a harness, the kept runs, every session as it was s
 | 1 | Can a reviewer that sees no content tell where a task stands when it stops and when it resumes? | 30, on one model | [`results/note.md`](results/note.md) |
 | 1b | Do the fixes close the gaps that experiment 1 found, and does the result hold on cheaper models? | 105, on Opus, Sonnet and Haiku | [`results_1b/note.md`](results_1b/note.md) |
 | X1 | What does a reviewer's own inspection plan catch, with a price on each check and without? | 90, on Opus, Sonnet and Haiku | [`results_x1/note.md`](results_x1/note.md) |
+| X7 | What does a careful review find that a fixed policy misses? | 120, on Opus, Sonnet and Haiku | [`results_x7/note.md`](results_x7/note.md) |
 
 In one line each:
 
 - **Experiment 1:** yes, at this scale. In all 15 blind sessions the counts matched the stop record, and no session treated an unconfirmed call as free to try again.
 - **Experiment 1b:** yes on all three models. A trace settles whether a doubtful call wrote its row, and the finding is kept apart from the record and the release.
 - **X1:** a flat result. All 90 plans covered what the library of instruments could cover, and every ruling was right by the key. With a library that states its limits, the plan was within reach of all three models, so the experiment says little about how they differ in planning.
+- **X7:** the models differ in what they read, not in what they plan. A cut that a planned check shows was caught by all three and by a rule that reads the clauses. Two cuts that show only in the record were found by Opus in every session, by Sonnet in 12 of 20 and by Haiku in 2 of 20, and each find came where the session had read every line that could carry the cut.
 
 Each note gives its limits. These are single tasks in one environment, with a handful of sessions for each cell. They show how the protocol behaves on these cases, and they are not rates.
 
@@ -24,11 +26,12 @@ Each note gives its limits. These are single tasks in one environment, with a ha
 
 | Path | What it holds |
 |---|---|
-| `uploads/` | The briefs as they were given. X1 has three: draft 2 (no suffix), draft 3 (`-1`) and draft 4 (`-2`). X1 was run on draft 4, with a clock line added to each wake after a pilot. |
-| `loop/` | The harness, the views shown to a session, the blind checks, the scorers and the table makers. Files ending in `_fx` belong to 1b and files ending in `_x1` to X1. |
-| `runs/`, `runs_1b/`, `runs_x1/` | The kept runs: the database, the record, and the answers taken at each moment. |
-| `results/`, `results_1b/`, `results_x1/` | For each experiment: `note.md`, `tables.md`, `scores.json`, the hand judgements, the blind checks, and every session under `sessions/`. Pilots are kept apart and not counted. |
+| `uploads/` | The briefs as they were given. X1 has three: draft 2 (no suffix), draft 3 (`-1`) and draft 4 (`-2`). X1 was run on draft 4, with a clock line added to each wake after a pilot. X7 has two: draft 2 (no suffix) and draft 3 (`-1`), and was run on draft 3. |
+| `loop/` | The harness, the views shown to a session, the blind checks, the scorers and the table makers. Files ending in `_fx` belong to 1b files ending in `_x1` to X1, and files ending in `_x7` (and `x7.py`) to X7. |
+| `runs/`, `runs_1b/`, `runs_x1/`, `runs_x7/` | The kept runs: the database, the record, and the answers taken at each moment. |
+| `results/`, `results_1b/`, `results_x1/`, `results_x7/` | For each experiment: `note.md`, `tables.md`, `scores.json`, the hand judgements, the blind checks, and every session under `sessions/`. Pilots are kept apart and not counted. |
 | `results_x1/report_before_the_90.md`, `results_x1/reply_after_the_90.md` | The two reports written to the brief's reviewer during X1. The second gives 13 sessions for a fault in the view; the note has the checked count, 14. |
+| `results_x7/report_before_the_sessions.md` | The report written to the brief's reviewer before the sessions of X7, after the first pilot. The views were changed after it; the note says how. |
 
 ## Running it
 
@@ -52,6 +55,18 @@ python -m loop.check_blind_x1 --sessions       # the blind check on the views an
 python -m loop.review_x1 sonnet priced 2 1 --pilot   # one session, kept apart
 python -m loop.review_x1 all 8                 # the 90 sessions, 8 at a time
 ```
+
+X7 works the same way, and writes over the kept files in `results_x7/`:
+
+```sh
+python -m loop.x7                              # runs 0, U, R1 and R2 under runs_x7/, and the prices
+python -m loop.check_blind_x7 --sessions       # the blind check
+python -m loop.scripts_x7                      # the three scripts
+python -m loop.rounds_x7                       # the 120 sessions, in ten rounds of twelve
+python -m loop.score_x7 && python -m loop.report_x7   # scores.json and tables.md
+```
+
+The 120 sessions of X7 cost about $64 as the runtime reports it.
 
 Experiments 1 and 1b work the same way through `loop.run_worker`, `loop.review`, `loop.score` and `loop.report`, and through `loop.fixes`, `loop.review_fx`, `loop.score_fx` and `loop.report_fx`. Each file gives its usage in its first lines.
 
